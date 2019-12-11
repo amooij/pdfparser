@@ -217,7 +217,7 @@ class Page extends PDFObject
                 $contents = new PDFObject($this->document, $header, $new_content);
             }
 
-            return $contents->getText($this);
+            return $contents->getTextWithClean($this);
         }
 
         return '';
