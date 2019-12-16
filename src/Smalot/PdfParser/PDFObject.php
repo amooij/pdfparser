@@ -238,6 +238,13 @@ class PDFObject
         return $sections;
     }
 
+    public function getTextWithClean(Page $page = null)
+	{
+		$ret = $this->getText($page);
+		$this->cleanRecursionStack();
+		return $ret;
+	}
+
     /**
      * @param Page
      *
@@ -432,7 +439,6 @@ class PDFObject
             }
         }
 
-        array_pop(self::$recursionStack);
 
         return $text . ' ';
     }
@@ -786,4 +792,9 @@ class PDFObject
     {
         return spl_object_hash($this);
     }
+
+    public function cleanRecursionStack()
+	{
+		self::$recursionStack = array();
+	}
 }
