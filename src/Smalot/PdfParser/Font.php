@@ -478,8 +478,8 @@ class Font extends PDFObject
                     $result = '';
                     
                     if (!$chars) {
-                    	$chars = [];
-					}
+                        $chars = [];
+		    }
                     foreach ($chars as $char) {
                         $dec_av = hexdec(bin2hex($char));
                         $dec_ap = $encoding->translateChar($dec_av);
