@@ -476,7 +476,10 @@ class Font extends PDFObject
                         PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
                     );
                     $result = '';
-
+                    
+                    if (!$chars) {
+                        $chars = [];
+                    }
                     foreach ($chars as $char) {
                         $dec_av = hexdec(bin2hex($char));
                         $dec_ap = $encoding->translateChar($dec_av);

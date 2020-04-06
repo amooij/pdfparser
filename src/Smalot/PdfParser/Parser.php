@@ -100,7 +100,18 @@ class Parser
         }
 
         if (empty($data)) {
-            throw new \Exception('Object list not found. Possible secured file.');
+            $tempFileIn = tempnam('/tmp', 'pdf');
+            file_put_contents($tempFileIn, $content);
+            $tempFileOut = tempnam('/tmp', 'pdf');
+            shell_exec('gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -dNOPAUSE -dQUIET -dBATCH -sOutputFile=' . $tempFileOut . ' ' . $tempFileIn);
+            $newContent = file_get_contents($tempFileOut);
+            @unlink($tempFileOut);
+
+            if (!strlen($newContent)) {
+                throw new \Exception('Object list not found. Reverting version also failed.');
+            }
+
+            return $this->parseContent($newContent);
         }
 
         // Create destination object.
